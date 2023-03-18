@@ -4,8 +4,8 @@
 int main()
 {
     int u,l,i,f;
-    printf("Enter the upper and lower limit\n");
-    scanf("%d%d",&u,&l);
+    printf("Enter the lower and uppper limit\n");
+    scanf("%d%d",&l,&u);
     printf("The prime numbers are");
     while(l<=u)
     {
