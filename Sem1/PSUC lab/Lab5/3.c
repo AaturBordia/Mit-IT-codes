@@ -52,7 +52,7 @@ int main()
     {
        printf("The numbers in sorted order are\n");
        for(i=0;i<n;i++)
-          printf("%d\n",a[i]);
+          printf("%d ",a[i]);
     }
     return 0;
 }
