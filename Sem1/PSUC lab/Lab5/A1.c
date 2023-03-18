@@ -21,7 +21,7 @@ int main()
         }
     }
     if(f==1)
-        printf("search successful");
+        printf("search successful at position %d",i);
     else
         printf("search unsuccessful");
     return 0;
