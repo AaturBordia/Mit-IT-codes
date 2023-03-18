@@ -13,9 +13,11 @@ int main()
         rev=rev*10+d;
         c=c/10;
     }
+    printf("The reversed no. is %d \n",rev);
     if(rev==n)
         printf("%d is a palindrome no.",n);
     else
         printf("%d is not a palindrome no.",n);
     return 0;
 }
+
