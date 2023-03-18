@@ -20,11 +20,14 @@ int main()
             }
             i++;
         }
+        if(n==1)
+            printf("1 is neither prime nor composite\n");
         if(f==0&&n!=1&&n!=-1)
             p++;
         else if(f==1&&n!=1&&n!=-1)
             c++;
     }while(n!=-1);
+
     printf("Number of prime nos. are %d\n",p);
     printf("Number of composite nos. are %d",c);
     return 0;
