@@ -101,7 +101,7 @@ void postfix_eval()
         else
         {
             int val;
-            cout << "enter the value of " << postfix[i];
+            cout << "enter the value of " << postfix[i]<<": ";
             cin >> val;
             obj.push(val);
         }
@@ -112,3 +112,4 @@ int main()
 {
     postfix_eval();
 }
+
