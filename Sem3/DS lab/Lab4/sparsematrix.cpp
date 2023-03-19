@@ -14,15 +14,15 @@ public:
 
 void SparseMatrix::input()
 {
-    cout<<"Enter no of rows";
+    cout<<"Enter no of rows: ";
     cin>>r1;
-    cout<<"Enter no of cols";
+    cout<<"Enter no of cols: ";
     cin>>c1;
     for(int i=0;i<r1;i++)
     {
         for (int j=0;j<c1;j++)
         {
-            cout<<"Enter element ["<<i<<"]["<<j<<"]";
+            cout<<"Enter element ["<<i<<"]["<<j<<"]: ";
             cin>>matrix1[i][j];
         }
     }
@@ -52,7 +52,7 @@ void SparseMatrix::create_sparse()
 }
 void SparseMatrix::display()
 {
-    cout<<"\n \tRows Colums values";
+    cout<<"\n \tRows|Colums|values";
      for(int i=0;i<=sparse[0][2];i++)
     {
         cout<<"\n";
@@ -97,7 +97,7 @@ void SparseMatrix::fast_transpose()
     }
     cout<<"\n Fast Transpose result";
 
-    cout<<"\n \tRows Colums values";
+    cout<<"\n \tRows|Colums|values";
      for(int i=0;i<=result[0][2];i++)
     {
         cout<<"\n";
@@ -115,4 +115,5 @@ int main()
     sp1.display();
     sp1.fast_transpose();
 }
+
 
