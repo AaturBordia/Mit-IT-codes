@@ -108,7 +108,7 @@ void prefix_eval()
         else
         {
             int val;
-            cout << "enter the value of " << prefix[i];
+            cout << "enter the value of " << prefix[i]<<": ";
             cin >> val;
             obj.push(val);
         }
