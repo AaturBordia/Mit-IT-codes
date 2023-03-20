@@ -5,12 +5,12 @@ int main(){
     cout<<"Enter n:";
     cin>>n;
     a=0;
-    cout<<a<<"\n";
+    cout<<a<<" ";
     b=1;
-    cout<<b<<"\n";
+    cout<<b<<" ";
     for(i=0;i<n-2;i++){
         f=a+b;
-        cout<<f<<"\n";
+        cout<<f<<" ";
         a=b;
         b=f;
 
