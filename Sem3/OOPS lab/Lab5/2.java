@@ -33,7 +33,7 @@ class Employee{
         System.out.println("Employee total salary is "+calculate());
     }
 }
-public class Main4 {
+public class Main{
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
         Employee e1 = new Employee();
