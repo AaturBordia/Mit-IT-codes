@@ -17,7 +17,7 @@ class Time{
         System.out.println(hours+":"+minutes+":"+seconds);
     }
 }
-public class Main4 {
+public class Main{
     static Time add(Time t1,Time t2){
         Time t = new Time();
         int h=0,m=0,s=0;
