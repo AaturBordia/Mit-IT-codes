@@ -46,7 +46,7 @@ public class Main{
                    for(int j=0;j<q;j++){
                      int sum=0;
                      for(int k=0;k<n;k++){
-                       sum+=arr3[i][k] * arr3[k][j];
+                       sum+=arr1[i][k] * arr2[k][j];
                      }  
                      arr3[i][j]=sum; 
                   }
