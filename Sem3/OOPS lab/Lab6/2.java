@@ -16,7 +16,7 @@ class Student{
    void display(){
     System.out.println("Name: "+name+"\nAge: "+age+"\nRegno: "+regno);
    }
-}
+} 
 class UG extends Student{
    int fees,sem;
    UG(){
@@ -35,7 +35,8 @@ class UG extends Student{
       System.out.println("Under graduate: ");
       System.out.println("Sem: "+sem+"\nPending fees: "+fees);
    }
-  class PG extends Student{
+}   
+ class PG extends Student{
    int fees,sem;
    PG(){
       fees=1500000;
@@ -62,4 +63,4 @@ public class main{
        std1.display_UG();
        std2.display_PG();
     }
-}  
+} 
