@@ -1,0 +1,138 @@
+ 1.
+import java.util.*;
+class t1 extends Thread{
+    int [] arr;
+    int n;
+    t1(int[] arr,int n)
+    {
+        this.arr=arr;
+        this.n=n;
+    }
+    @Override
+    public void run(){
+        Thread t=currentThread();
+        synchronized(arr){
+            for(int i=0;i<n;i++)
+            System.out.println(t.getName()+""+i);
+
+        }
+
+        
+    }
+}
+class t2 extends Thread{
+        int[]arr;
+        int n;
+        t2(int[]arr,int n)
+        {
+            this.arr=arr;
+            this.n=n;
+        }
+        @Override
+        public void run(){
+            Thread t=currentThread();
+            synchronized(arr){
+                for(int i=0;i<n;i++){
+                    if(arr[i]%2==0)
+                    System.out.println("Even");
+                    else
+                    System.out.println("Odd");
+                }
+
+
+            }
+        }
+}
+class pracown {
+    public static void main(String args[])
+    {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter number of elements");
+        int n=sc.nextInt();
+        int[] arr=new int[n];
+        System.out.println("Enter elements");
+        for(int i=0;i<n;i++)
+        {
+            arr[i]=sc.nextInt();
+        }
+        t1 t=new t1(arr,n);
+        t.start();
+        t2 to=new t2(arr,n);
+        to.start();
+
+        sc.close();}
+    
+}
+
+
+2.
+
+ import java.io.*;
+class t1 extends Thread{
+    File f;
+    t1(File f)
+    {
+        this.f=f;
+    }
+    @Override
+    public void run()
+    {
+        try{
+            FileReader reader=new FileReader("qwe.txt");
+            int data=reader.read();
+            while(data!=-1)
+        {
+            System.out.print((char)data);
+            data=reader.read();
+        }    
+        reader.close();
+        }catch(Exception e){
+            System.out.println(e);
+
+        }
+
+    }
+    
+}
+class t2 extends Thread{
+    File f;
+    t2(File f)
+    {
+        this.f=f;
+    }
+    @Override
+    public void run()
+    {
+        try{
+            FileWriter writer=new FileWriter("qwe.txt");
+            writer.write("lfgshfas");
+            writer.append("\nHello");
+            writer.close();
+            }catch(Exception e)
+            {
+                System.out.println(e);
+            }
+
+    }
+}
+public class tfile {
+    public static void main(String args[])
+    {
+    File f=new File("qwe.txt");
+    t1 t=new t1(f);
+    t2 ta=new t2(f);
+    t.start();
+    try{
+        t.join();
+    }catch(Exception e)
+    {
+        System.out.println(e);
+    }
+    ta.start();
+
+    
+        
+
+
+        }
+}
