@@ -1,0 +1,128 @@
+package lab_eval;
+import java.util.Scanner;
+class mythread extends Thread{
+    Scanner s = new Scanner(System.in);
+    @Override
+    public void run(){
+        Thread t = currentThread();
+        int n;
+        do{
+            System.out.println(t.getName()+":enter number of elements in array:");
+            n = s.nextInt();
+            try{
+                if(n<0){
+                    throw new NegetiveNumber(n,t);
+                }
+            }catch(NegetiveNumber e){
+                System.out.println(e);
+            }
+        }while(n<0);
+        int[] arr = new int[n];
+        System.out.println(t.getName()+":enter elemets :");
+        for(int i =0;i<n;i++){
+            do{
+            arr[i] = s.nextInt();
+            try{
+                if(arr[i]<0){
+                    throw new NegetiveNumber(arr[i],t);
+                }
+            }catch(NegetiveNumber e){
+                System.out.println(e);
+            }
+            }while(arr[i]<0);
+        }
+        System.out.println(t.getName()+":sorted list :");
+        for(int i =0;i<n-1;i++){
+            for(int j = 0;j < n-i-1;j++){
+                if(arr[j+1]<arr[j]){
+                    int temp = arr[j+1];
+                    arr[j+1] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+        for(int i =0;i<n;i++){
+            System.out.print(arr[i] + " ");
+        }
+    }
+}
+class mythread2 extends Thread{
+    Scanner s = new Scanner(System.in);
+    @Override
+    public void run(){
+        Thread t = currentThread();
+        int n;
+        do{
+            System.out.println("\n"+t.getName()+":enter number of elements in thread :");
+            n = s.nextInt();
+            try{
+                if(n<0){
+                    throw new NegetiveNumber(n,t);
+                }
+            }catch(NegetiveNumber e){
+                System.out.println(e);
+            }
+        }while(n<0);
+        int[] arr = new int[n];
+        System.out.println(t.getName()+":enter elemets :");
+        for(int i =0;i<n;i++){
+            do{
+            arr[i] = s.nextInt();
+            try{
+                if(arr[i]<0){
+                    throw new NegetiveNumber(arr[i],t);
+                }
+            }catch(NegetiveNumber e){
+                System.out.println(e);
+            }
+            }while(arr[i]<0);
+        }
+        int ele;
+        do{
+        System.out.println(t.getName()+":enter a number to search :");
+        ele  = s.nextInt();
+        try{
+            if(ele<0){
+                throw new NegetiveNumber(ele,t);
+            }
+        }catch(NegetiveNumber e){
+            System.out.println(e);
+        }
+        }while(ele<0);
+        boolean flag = false;
+        for(int i =0;i<n;i++){
+            if(arr[i]==ele){
+                flag = true;
+                System.out.println(t.getName()+":element is at index "+i);
+            }
+        }
+        if(!flag){
+            System.out.println(t.getName()+":element not present");
+        }
+    }
+}
+class NegetiveNumber extends Exception{
+    int n;
+    Thread t;
+    NegetiveNumber(int n,Thread t){
+        this.n = n;
+        this.t = t;
+    }
+    @Override
+    public String toString(){
+        return "number cannot negetive :"+n+":"+t.getName();
+    }
+}
+public class Lab_eval {
+    public static void main(String[] args) {
+        mythread t = new mythread();
+        mythread2 t2 = new mythread2();
+        t.start();
+        try{
+            t.join();
+        }catch(InterruptedException e){
+            System.out.println(e);
+        }
+        t2.start();
+    }
+}
