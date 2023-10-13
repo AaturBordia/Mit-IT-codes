@@ -13,7 +13,10 @@ int main()
         printf("The prime numbers are\n");
     for(i=0;i<n;i++)
     {
-        int f=0;
+        for (i = 0; i < n; i++) {
+        int f = 0;
+        if (a[i] <= 1)
+            f = 1;
         for(j=2;j<a[i];j++)
         {
             if(a[i]%j==0)
@@ -26,4 +29,5 @@ int main()
             printf("%d\n",a[i]);
     }
     return 0;
+   }
 }
