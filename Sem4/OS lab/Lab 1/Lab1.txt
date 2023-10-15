@@ -1,0 +1,111 @@
+STUDENT2@MIT-ICT-LAB8-24:~$ cd /usr/bin
+STUDENT2@MIT-ICT-LAB8-24:/usr/bin$ cd ~
+STUDENT2@MIT-ICT-LAB8-24:~$ pwd
+/home/STUDENT2
+STUDENT2@MIT-ICT-LAB8-24:~$ mkdir 210911340
+STUDENT2@MIT-ICT-LAB8-24:~$ ls
+ 210911340   Desktop     Downloads  'OS LAB MANUAL 2022.pdf'   Templates
+ 210953308   Do          file.txt    Pictures                  Videos
+ a           Documents   Music       Public
+STUDENT2@MIT-ICT-LAB8-24:~$ cd 210911340
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ touch file1.txt file2.txt file3.txt file4.txt file5.txt file6.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ ls
+file1.txt  file2.txt  file3.txt  file4.txt  file5.txt  file6.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ ls f*
+file1.txt  file2.txt  file3.txt  file4.txt  file5.txt  file6.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ ls file?.txt
+file1.txt  file2.txt  file3.txt  file4.txt  file5.txt  file6.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ cat>file1.txt
+Heelo guysSTUDENT2@MIT-ICT-LAB8-24:~/210911340$ cat>>file1.txt
+heyySTUDENT2@MIT-ICT-LAB8-24:~/210911340$ man wc
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ ls-l
+ls-l: command not found
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ ls -l
+total 4
+-rw-rw-r-- 1 STUDENT2 STUDENT2 14 Feb  4 09:20 file1.txt
+-rw-rw-r-- 1 STUDENT2 STUDENT2  0 Feb  4 09:15 file2.txt
+-rw-rw-r-- 1 STUDENT2 STUDENT2  0 Feb  4 09:15 file3.txt
+-rw-rw-r-- 1 STUDENT2 STUDENT2  0 Feb  4 09:15 file4.txt
+-rw-rw-r-- 1 STUDENT2 STUDENT2  0 Feb  4 09:15 file5.txt
+-rw-rw-r-- 1 STUDENT2 STUDENT2  0 Feb  4 09:15 file6.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ ls -la
+total 12
+drwxrwxr-x  2 STUDENT2 STUDENT2 4096 Feb  4 09:15 .
+drwx------ 18 STUDENT2 STUDENT2 4096 Feb  4 09:14 ..
+-rw-rw-r--  1 STUDENT2 STUDENT2   14 Feb  4 09:20 file1.txt
+-rw-rw-r--  1 STUDENT2 STUDENT2    0 Feb  4 09:15 file2.txt
+-rw-rw-r--  1 STUDENT2 STUDENT2    0 Feb  4 09:15 file3.txt
+-rw-rw-r--  1 STUDENT2 STUDENT2    0 Feb  4 09:15 file4.txt
+-rw-rw-r--  1 STUDENT2 STUDENT2    0 Feb  4 09:15 file5.txt
+-rw-rw-r--  1 STUDENT2 STUDENT2    0 Feb  4 09:15 file6.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ wc file1.txt
+ 0  2 14 file1.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ wc -l
+6
+1
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ wc -l
+0
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ ls
+file1.txt  file2.txt  file3.txt  file4.txt  file5.txt  file6.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ mkdir experiment
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ touch./experiment/abc.txt
+bash: touch./experiment/abc.txt: No such file or directory
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ rm-rf experiment
+rm-rf: command not found
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ ls
+experiment  file1.txt  file2.txt  file3.txt  file4.txt  file5.txt  file6.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ touch ./experiment/abc.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ rm-rf experiment
+rm-rf: command not found
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ rm -rf experiment
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ ls
+file1.txt  file2.txt  file3.txt  file4.txt  file5.txt  file6.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ cp  file1.txt file2.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ cat file2.txt
+Heelo guysheyySTUDENT2@MIT-ICT-LAB8-24:~/210911340$ head file2.txt
+Heelo guysheyySTUDENT2@MIT-ICT-LAB8-24:~/210911340$ cat >>file1.txt
+bro
+what are
+you doing?STUDENT2@MIT-ICT-LAB8-24:~/210911340$ find. -name "*.txt"
+
+Command 'find.' not found, did you mean:
+
+  command 'find' from deb findutils (4.7.0-1ubuntu1)
+  command 'findg' from deb ncl-ncarg (6.6.2-1build4)
+  command 'findv' from deb polylib-utils (5.22.5-4+dfsg)
+
+Try: apt install <deb name>
+
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ find . -name "*.txt"
+./file4.txt
+./file3.txt
+./file1.txt
+./file5.txt
+./file6.txt
+./file2.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ find . -name "*[0-9]*"
+./file4.txt
+./file3.txt
+./file1.txt
+./file5.txt
+./file6.txt
+./file2.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ find . -name "*????*"
+./file4.txt
+./file3.txt
+./file1.txt
+./file5.txt
+./file6.txt
+./file2.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ find . -name "[!aeiou]"
+.
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ ^C
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ cd 210911340
+bash: cd: 210911340: No such file or directory
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ cd 210911340
+bash: cd: 210911340: No such file or directory
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ touch Lab1.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ ls
+file1.txt  file2.txt  file3.txt  file4.txt  file5.txt  file6.txt  Lab1.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ 
+

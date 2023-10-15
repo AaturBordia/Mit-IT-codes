@@ -1,0 +1,248 @@
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ touch fruitlist.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ cat fruitlist.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ 
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ cat> fruitlist.txt
+apple
+apples
+bananas
+pineapple
+pear
+peach               
+orange
+mangoSTUDENT2@MIT-ICT-LAB8-24:~/210911340$ grep apple fruitlist.txt
+apple
+apples
+pineapple
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ grep-x apple fruitlist.txt
+grep-x: command not found
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ grep^p apple fruitlist.txt
+grep^p: command not found
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ grep ^p apple fruitlist.txt
+grep: apple: No such file or directory
+fruitlist.txt:pineapple
+fruitlist.txt:pear
+fruitlist.txt:peach 
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ grep -x apple fruitlist.txt
+apple
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ grep -v apple fruitlist.txt
+bananas
+pear
+peach 
+orange
+mango
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ sort fruitlist.txt
+apple
+apples
+bananas
+mango
+orange
+peach 
+pear
+pineapple
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ sort -o fruitlist.txt market.txt
+sort: cannot read: market.txt: No such file or directory
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ touch market.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ sort -o fruitlist.txt market.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ wc market.txt
+0 0 0 market.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ cut -c1-4,9 market.txt
+appl
+flou
+bakih
+bana
+mang
+pinee
+vani
+choce
+jam
+cooko
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ cut -c1,4,9 market.txt
+al
+fu
+bih
+ba
+mg
+pee
+vi
+cce
+j
+cko
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$sed -e 's/pineapples/cashews/' market.txt #changes the input in the file to the output provided
+apples
+flour
+baking sheets
+bananas
+mangoes
+cashews
+vanilla
+chocolate chips
+jam
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ sed -e 's/cashews/syrup/g' market.txt #changes the input/output to the global input{first input ever recorded}
+apples
+flour
+baking sheets
+bananas
+mangoes
+pineapples
+vanilla
+chocolate chips
+jam
+cooking oil
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ sed -e 's/cashews/syrup/g' market.txt> newfile.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ cat newfile.txt
+apples
+flour
+baking sheets
+bananas
+mangoes
+pineapples
+vanilla
+chocolate chips
+jam
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ sed -i-e 's/cashews/syrup/' newfile.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ cat newfile.txt
+apples
+flour
+baking sheets
+bananas
+mangoes
+pineapples
+vanilla
+chocolate chips
+jam
+cooking oil
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ ls /usr/local/bin
+packettracer
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ sed -e 's/[0-9]*/(&)/' newfile.txt
+()apples
+()flour
+()baking sheets
+()bananas
+()mangoes
+()pineapples
+()vanilla
+()chocolate chips
+()jam
+()cooking oil
+#where [0-9] is a regexp range for all single digit numbers, and the '*' is a repeat
+count, means any number of digits.
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ sed -e 's/[a-z]*/(&)/' newfile.txt
+(apples)
+(flour)
+(baking) sheets
+(bananas)
+(mangoes)
+(pineapples)
+(vanilla)
+(chocolate) chips
+(jam)
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ ~/210911334$ sed -e 's/[a-z]e.txt
+sed: can't read newfie.txt: No such file or directory
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ sed -e 's/[a-z]/(&)/' newfile.txt
+(a)pples
+(f)lour
+(b)aking sheets
+(b)ananas
+(m)angoes
+(p)ineapples
+(v)anilla
+(c)hocolate chips
+(j)am
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ sed -e '/^apple/ d' newfile.txt #deletes all lines that start with the comment symbol 'apple' in my_file.
+flour
+baking sheets
+bananas
+mangoes
+pineapples
+vanilla
+chocolate chips
+jam
+cooking oil
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ sed -i '/jam/a "hello"' market.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ cat market.txt
+apples
+baking sheets
+bananas
+chocolate chips
+cooking oil
+flour
+jam
+"hello"
+mangoes
+pineapples
+vanilla
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ tr “[a-z]” “[A-Z]” < market.txt
+APPLES
+BAKING SHEETS
+BANANAS
+CHOCOLATE CHIPS
+COOKING OIL
+FLOUR
+JAM
+"HELLO"
+MANGOES
+PINEAPPLES
+VANILLA
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ tr 'abcd' 'jkmn' #maps all characters a to j, b to k, c to m, and d to n.
+hgf
+hgf
+fgh
+fgh
+accd 
+jmmn
+abcd
+jkmn
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ ps
+    PID TTY          TIME CMD
+   3684 pts/0    00:00:00 bash
+   5232 pts/0    00:00:00 ps
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ ps -aux
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+student2    4845  0.0  1.2 2426524 101540 ?      Sl   09:47   0:00 /us
+student2    4878  0.5  1.3 2428596 109832 ?      Sl   09:47   0:12 /us
+student2    4946  0.0  0.0 360064  5720 ?        Sl   09:47   0:00 /us
+student2    4951  0.0  0.1 450368  8136 ?        Sl   09:47   0:00 /us
+student2    4955  0.2  1.9 2517508 158496 ?      Sl   09:47   0:04 /us
+student2    4960  0.0  0.9 2405572 75380 ?       Sl   09:47   0:00 /us
+student2    4968  0.0  0.0 159732  2232 ?        Ssl  09:47   0:00 /us
+student2    4972  0.0  0.9 2405572 74896 ?       Sl   09:47   0:00 /us⬅️
+student2    5112  0.0  0.9 2405572 75152 ?       Sl   10:02   0:00 /us
+student2    5253  0.0  0.0  11684  3412 pts/0    R+   10:22   0:00 ps 
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ kill 4972
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ ps -aux
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+student2    3987  0.0  1.2 2425392 102220 ?      Sl   08:54   0:00 /us
+student2    4237  0.0  1.5 2486228 126248 ?      Sl   08:55   0:01 /us
+student2    4298  0.1  1.7 2481596 143504 ?      Sl   08:55   0:05 /us
+student2    4330  0.0  1.8 2488516 146420 ?      Sl   08:55   0:03 /us
+student2    4845  0.0  1.2 2426524 101540 ?      Sl   09:47   0:00 /us
+student2    4878  0.5  1.3 2428596 109832 ?      Sl   09:47   0:12 /us
+student2    4946  0.0  0.0 360064  5720 ?        Sl   09:47   0:00 /us
+student2    4951  0.0  0.1 450368  8136 ?        Sl   09:47   0:00 /us
+student2    4955  0.2  1.9 2517508 158496 ?      Sl   09:47   0:04 /us
+student2    4960  0.0  0.9 2405572 75380 ?       Sl   09:47   0:00 /us
+student2    4968  0.0  0.0 159732  2232 ?        Ssl  09:47   0:00 /us
+student2    5112  0.0  0.9 2405572 75152 ?       Sl   10:02   0:00 /us
+tudent2@MIT-ICT-LAB8-23:~/210911334$ chmod a+r Comments.txt
+chmod: cannot access 'Comments.txt': No such file or directory
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ chmod a+rx market.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ echo
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ 
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ echo market.txt
+market.txt
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ bc
+bc 1.07.1
+Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006, 2008, 2012-2017 Free Software Foundation, Inc.
+This is free software with ABSOLUTELY NO WARRANTY.
+For details type `warranty'. 
+5+2
+7
+5/2
+2
+5>2
+1
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ vi
+STUDENT2@MIT-ICT-LAB8-24:~/210911340$ vi newfile.txt
+#This command would open a display screen with 25 lines and with tilt (~) symbol at the
+start of each line. The first syntax would save the file in the filename mentioned and for
+the next the filename must be mentioned at the end.
