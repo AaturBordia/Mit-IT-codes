@@ -1,0 +1,83 @@
+create table person(
+driver_id varchar(30) PRIMARY KEY, 
+name varchar(50), 
+Address varchar(100));
+
+create table car(
+regno varchar(20) PRIMARY KEY, 
+model varchar(30), 
+Year int);
+
+create table accident(
+report_number int PRIMARY KEY, 
+accd_date date, 
+location varchar(50));
+
+create table owns(
+driver_id varchar(30),
+regno varchar(20),
+primary key(driver_id, regno),
+FOREIGN KEY(driver_id)references person(driver_id));
+
+create table participated(
+driver_id varchar(30), 
+regno varchar(20), 
+report_number int, 
+damage_amount int,
+primary key(driver_id,regno,report_number),
+FOREIGN KEY(driver_id)references person(driver_id));
+
+
+insert into person values('1', 'AATUR', 'UDAIPUR');
+insert into person values('2', 'ARTHAM', 'JONPUR');
+insert into person values('3', 'AAKASH', 'VADODRA');
+insert into person values('4', 'NAVEEN', 'BANGALORE');
+insert into person values('5', 'SHAVARNi', 'JONPUR');
+insert into person values('6', 'SUNDAR', 'HYDERABAD');
+
+
+insert into car values('1A', 'SUPRA', 2016);
+insert into car values('1B', 'BUGATI', 2018);
+insert into car values('2A', 'Maruti Suzuki Baleno', 2014);
+insert into car values('2B', 'Maruti Suzuki Baleno', 2016);
+insert into car values('3A', 'Hyundai Venue', 2016);
+insert into car values('3B', 'Hyundai Creta', 2015);
+insert into car values('4A', 'Hyundai Creta', 2020);
+insert into car values('4B', 'Hyundai Venue', 2019);
+
+
+insert into accident values(11, '5-OCT-2008', 'UDAIPUR');
+insert into accident values(1, '15-SEP-2009', 'JONPUR');
+insert into accident values(9, '16-FEB-2012', 'VADODRA');
+insert into accident values(5, '17-DEC-2023', 'BANGALORE');
+insert into accident values(7, '12-Aug-2008', 'JONPUR');
+insert into accident values(12,'3-JAN-2008', 'HYDERABAD');
+	
+
+insert into owns values('1', '1B');
+insert into owns values('2', '3B');
+insert into owns values('3', '1A');
+insert into owns values('4', '2A');
+insert into owns values('5', '4A');
+insert into owns values('6', '2B');
+insert into owns values('1', '2B');
+
+
+insert into participated values('2', '3B', 11, 5000);
+insert into participated values('1', '4B', 1, 35000);
+insert into participated values('4', '2A', 9, 15000);
+insert into participated values('1', '1B', 5, 19000);
+insert into participated values('4', '2B', 7, 17000);
+insert into participated values('2', '3B', 12, 3000);
+
+
+
+
+
+
+UPDATE PARTICIPATED SET DAMAGE_AMOUNT = 25000 WHERE (REPORT_NUMBER = 12 AND REGNO = '3B');
+
+    delete from accident where extract(year from accd_date) = '2012';
+ ALTER TABLE OWNS ADD (PRICE INT);
+   ALTER TABLE OWNS DROP COLUMN PRICE;
+ ALTER TABLE ACCIDENT ADD CHECK (REPORT_NUMBER >0);

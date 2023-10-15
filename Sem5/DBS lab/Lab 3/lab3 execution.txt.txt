@@ -1,0 +1,420 @@
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Thu Aug 24 15:21:17 2023
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Enter user-name: it340@ictorcl
+Enter password:
+Last Successful login time: Thu Aug 24 2023 15:11:44 +05:30
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> create table person(
+  2  driver_id varchar(30) PRIMARY KEY,
+  3  name varchar(50),
+  4  Address varchar(100));
+
+Table created.
+
+SQL>
+SQL> create table car(
+  2  regno varchar(20) PRIMARY KEY,
+  3  model varchar(30),
+  4  Year int);
+
+Table created.
+
+SQL>
+SQL> create table accident(
+  2  report_number int PRIMARY KEY,
+  3  accd_date date,
+  4  location varchar(50));
+
+Table created.
+
+SQL>
+SQL> create table owns(
+  2  driver_id varchar(30),
+  3  regno varchar(20),
+  4  primary key(driver_id, regno),
+  5  FOREIGN KEY(driver_id)references person(driver_id));
+
+Table created.
+
+SQL>
+SQL> create table participated(
+  2  driver_id varchar(30),
+  3  regno varchar(20),
+  4  report_number int,
+  5  damage_amount int,
+  6  primary key(driver_id,regno,report_number),
+  7  FOREIGN KEY(driver_id)references person(driver_id));
+
+Table created.
+
+SQL>
+SQL>
+SQL> insert into person values('1', 'AATUR', 'UDAIPUR');
+
+1 row created.
+
+SQL> insert into person values('2', 'ARTHAM', 'JONPUR');
+
+1 row created.
+
+SQL> insert into person values('3', 'AAKASH', 'VADODRA');
+
+1 row created.
+
+SQL> insert into person values('4', 'NAVEEN', 'BANGALORE');
+
+1 row created.
+
+SQL> insert into person values('5', 'SHAVARNi', 'JONPUR');
+
+1 row created.
+
+SQL> insert into person values('6', 'SUNDAR', 'HYDERABAD');
+
+1 row created.
+
+SQL>
+SQL>
+SQL> insert into car values('1A', 'SUPRA', 2016);
+
+1 row created.
+
+SQL> insert into car values('1B', 'BUGATI', 2018);
+
+1 row created.
+
+SQL> insert into car values('2A', 'Maruti Suzuki Baleno', 2014);
+
+1 row created.
+
+SQL> insert into car values('2B', 'Maruti Suzuki Baleno', 2016);
+
+1 row created.
+
+SQL> insert into car values('3A', 'Hyundai Venue', 2016);
+
+1 row created.
+
+SQL> insert into car values('3B', 'Hyundai Creta', 2015);
+
+1 row created.
+
+SQL> insert into car values('4A', 'Hyundai Creta', 2020);
+
+1 row created.
+
+SQL> insert into car values('4B', 'Hyundai Venue', 2019);
+
+1 row created.
+
+SQL>
+SQL>
+SQL> insert into accident values(11, '5-OCT-2008', 'UDAIPUR');
+
+1 row created.
+
+SQL> insert into accident values(1, '15-SEP-2009', 'JONPUR');
+
+1 row created.
+
+SQL> insert into accident values(9, '16-FEB-2012', 'VADODRA');
+
+1 row created.
+
+SQL> insert into accident values(5, '17-DEC-2023', 'BANGALORE');
+
+1 row created.
+
+SQL> insert into accident values(7, '12-Aug-2008', 'JONPUR');
+
+1 row created.
+
+SQL> insert into accident values(12,'3-JAN-2008', 'HYDERABAD');
+
+1 row created.
+
+SQL>
+SQL>
+SQL> insert into owns values('1', '1B');
+
+1 row created.
+
+SQL> insert into owns values('2', '3B');
+
+1 row created.
+
+SQL> insert into owns values('3', '1A');
+
+1 row created.
+
+SQL> insert into owns values('4', '2A');
+
+1 row created.
+
+SQL> insert into owns values('5', '4A');
+
+1 row created.
+
+SQL> insert into owns values('6', '2B');
+
+1 row created.
+
+SQL> insert into owns values('1', '2B');
+
+1 row created.
+
+SQL>
+SQL>
+SQL> insert into participated values('2', '3B', 11, 5000);
+
+1 row created.
+
+SQL> insert into participated values('1', '4B', 1, 35000);
+
+1 row created.
+
+SQL> insert into participated values('4', '2A', 9, 15000);
+
+1 row created.
+
+SQL> insert into participated values('1', '1B', 5, 19000);
+
+1 row created.
+
+SQL> insert into participated values('4', '2B', 7, 17000);
+
+1 row created.
+
+SQL> insert into participated values('2', '3B', 12, 3000);
+
+1 row created.
+
+SQL> desc person;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DRIVER_ID                                 NOT NULL VARCHAR2(30)
+ NAME                                               VARCHAR2(50)
+ ADDRESS                                            VARCHAR2(100)
+
+SQL> desc car;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL VARCHAR2(20)
+ MODEL                                              VARCHAR2(30)
+ YEAR                                               NUMBER(38)
+
+SQL> desc accident;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REPORT_NUMBER                             NOT NULL NUMBER(38)
+ ACCD_DATE                                          DATE
+ LOCATION                                           VARCHAR2(50)
+
+SQL> desc owns;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DRIVER_ID                                 NOT NULL VARCHAR2(30)
+ REGNO                                     NOT NULL VARCHAR2(20)
+
+SQL> desc participated;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DRIVER_ID                                 NOT NULL VARCHAR2(30)
+ REGNO                                     NOT NULL VARCHAR2(20)
+ REPORT_NUMBER                             NOT NULL NUMBER(38)
+ DAMAGE_AMOUNT                                      NUMBER(38)
+
+SQL> select * from person;
+
+DRIVER_ID
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+1
+AATUR
+UDAIPUR
+
+2
+ARTHAM
+JONPUR
+
+DRIVER_ID
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+
+3
+AAKASH
+VADODRA
+
+4
+NAVEEN
+
+DRIVER_ID
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+BANGALORE
+
+5
+SHAVARNi
+JONPUR
+
+6
+
+DRIVER_ID
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+SUNDAR
+HYDERABAD
+
+
+6 rows selected.
+
+SQL> select * from car;
+
+REGNO                MODEL                                YEAR
+-------------------- ------------------------------ ----------
+1A                   SUPRA                                2016
+1B                   BUGATI                               2018
+2A                   Maruti Suzuki Baleno                 2014
+2B                   Maruti Suzuki Baleno                 2016
+3A                   Hyundai Venue                        2016
+3B                   Hyundai Creta                        2015
+4A                   Hyundai Creta                        2020
+4B                   Hyundai Venue                        2019
+
+8 rows selected.
+
+SQL> select * from accident;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+           11 05-OCT-08 UDAIPUR
+            1 15-SEP-09 JONPUR
+            9 16-FEB-12 VADODRA
+            5 17-DEC-23 BANGALORE
+            7 12-AUG-08 JONPUR
+           12 03-JAN-08 HYDERABAD
+
+6 rows selected.
+
+SQL> select * from owns;
+
+DRIVER_ID                      REGNO
+------------------------------ --------------------
+1                              1B
+1                              2B
+2                              3B
+3                              1A
+4                              2A
+5                              4A
+6                              2B
+
+7 rows selected.
+
+SQL> select * from participated;
+
+DRIVER_ID                      REGNO                REPORT_NUMBER DAMAGE_AMOUNT
+------------------------------ -------------------- ------------- -------------
+2                              3B                              11          5000
+1                              4B                               1         35000
+4                              2A                               9         15000
+1                              1B                               5         19000
+4                              2B                               7         17000
+2                              3B                              12          3000
+
+6 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> UPDATE PARTICIPATED SET DAMAGE_AMOUNT = 25000 WHERE (REPORT_NUMBER = 12 AND REGNO = '3B');
+
+1 row updated.
+
+SQL> select * from participated;
+
+DRIVER_ID                      REGNO                REPORT_NUMBER DAMAGE_AMOUNT
+------------------------------ -------------------- ------------- -------------
+2                              3B                              11          5000
+1                              4B                               1         35000
+4                              2A                               9         15000
+1                              1B                               5         19000
+4                              2B                               7         17000
+2                              3B                              12         25000
+
+6 rows selected.
+
+SQL>     delete from accident where extract(year from accd_date) = '2012';
+
+1 row deleted.
+
+SQL> select * from accident;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+           11 05-OCT-08 UDAIPUR
+            1 15-SEP-09 JONPUR
+            5 17-DEC-23 BANGALORE
+            7 12-AUG-08 JONPUR
+           12 03-JAN-08 HYDERABAD
+
+SQL>  ALTER TABLE OWNS ADD (PRICE INT);
+
+Table altered.
+
+SQL> desc owns;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DRIVER_ID                                 NOT NULL VARCHAR2(30)
+ REGNO                                     NOT NULL VARCHAR2(20)
+ PRICE                                              NUMBER(38)
+
+SQL>    ALTER TABLE OWNS DROP COLUMN PRICE;
+
+Table altered.
+
+SQL> desc owns;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DRIVER_ID                                 NOT NULL VARCHAR2(30)
+ REGNO                                     NOT NULL VARCHAR2(20)
+
+SQL>  ALTER TABLE ACCIDENT ADD CHECK (REPORT_NUMBER >0);
+
+Table altered.
+
+SQL> select * from accident;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+           11 05-OCT-08 UDAIPUR
+            1 15-SEP-09 JONPUR
+            5 17-DEC-23 BANGALORE
+            7 12-AUG-08 JONPUR
+           12 03-JAN-08 HYDERABAD
+
+SQL> commit;
+
+Commit complete.
+
+SQL>

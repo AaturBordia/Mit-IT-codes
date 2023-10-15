@@ -1,0 +1,100 @@
+LAB-3
+-- Create the CUSTOMER table
+CREATE TABLE CUSTOMER (
+    cust# INT PRIMARY KEY,
+    cname VARCHAR(50),
+    city VARCHAR(30)
+);
+
+-- Create the ORDERS table
+CREATE TABLE ORDERS (
+    order# INT PRIMARY KEY,
+    odate DATE,
+    cust# INT,
+    ordamt INT,
+    FOREIGN KEY (cust#) REFERENCES CUSTOMER(cust#)
+);
+
+-- Create the ITEM table
+CREATE TABLE ITEM (
+    item# INT PRIMARY KEY,
+    unitprice INT
+);
+
+-- Create the ORDER_ITEMS table
+CREATE TABLE ORDER_ITEMS (
+    order# INT,
+    item# INT,
+    qty INT,
+    PRIMARY KEY (order#, item#),
+    FOREIGN KEY (order#) REFERENCES ORDERS(order#),
+    FOREIGN KEY (item#) REFERENCES ITEM(item#)
+);
+
+-- Create the SHIPMENT table
+CREATE TABLE SHIPMENT (
+    order# INT,
+    warehouse# INT,
+    shipdate DATE,
+    PRIMARY KEY (order#, warehouse#),
+    FOREIGN KEY (order#) REFERENCES ORDERS(order#)
+);
+
+-- Create the WAREHOUSE table
+CREATE TABLE WAREHOUSE (
+    warehouse# INT PRIMARY KEY,
+    city VARCHAR(30)
+);
+
+
+-- Example tuples for CUSTOMER table
+INSERT INTO CUSTOMER (cust#, cname, city) VALUES (1, 'Rahul Sharma', 'Delhi');
+INSERT INTO CUSTOMER (cust#, cname, city) VALUES (2, 'Priya Verma', 'Mumbai');
+INSERT INTO CUSTOMER (cust#, cname, city) VALUES (3, 'Amit Singh', 'Bangalore');
+INSERT INTO CUSTOMER (cust#, cname, city) VALUES (4, 'Meera Patel', 'Ahmedabad');
+INSERT INTO CUSTOMER (cust#, cname, city) VALUES (5, 'Rajesh Gupta', 'Kolkata');
+
+-- Example tuples for ORDERS table
+INSERT INTO ORDERS (order#, odate, cust#, ordamt) VALUES (101, to_date('2023-09-01','yyyy/mm/dd'), 1, 500);
+INSERT INTO ORDERS (order#, odate, cust#, ordamt) VALUES (102, to_date('2023-09-02', 'yyyy/mm/dd'), 2, 750);
+INSERT INTO ORDERS (order#, odate, cust#, ordamt) VALUES (103, to_date('2023-09-03', 'yyyy/mm/dd'), 1, 300);
+INSERT INTO ORDERS (order#, odate, cust#, ordamt) VALUES (104, to_date('2023-09-03','yyyy/mm/dd'), 3, 600);
+INSERT INTO ORDERS (order#, odate, cust#, ordamt) VALUES (105, to_date('2023-09-04','yyyy/mm/dd'), 4, 400);
+
+-- Example tuples for ITEM table
+INSERT INTO ITEM (item#, unitprice) VALUES (201, 10);
+INSERT INTO ITEM (item#, unitprice) VALUES (202, 20);
+INSERT INTO ITEM (item#, unitprice) VALUES (203, 15);
+INSERT INTO ITEM (item#, unitprice) VALUES (204, 25);
+INSERT INTO ITEM (item#, unitprice) VALUES (205, 30);
+
+-- Example tuples for ORDER_ITEMS table
+INSERT INTO ORDER_ITEMS (order#, item#, qty) VALUES (101, 201, 5);
+INSERT INTO ORDER_ITEMS (order#, item#, qty) VALUES (101, 202, 3);
+INSERT INTO ORDER_ITEMS (order#, item#, qty) VALUES (102, 203, 7);
+INSERT INTO ORDER_ITEMS (order#, item#, qty) VALUES (103, 201, 2);
+INSERT INTO ORDER_ITEMS (order#, item#, qty) VALUES (104, 204, 4);
+
+-- Example tuples for SHIPMENT table
+INSERT INTO SHIPMENT (order#, warehouse#, shipdate) VALUES (101, 1, to_date('2023-09-05', 'yyyy/mm/dd');
+INSERT INTO SHIPMENT (order#, warehouse#, shipdate) VALUES (102, 2, to_date('2023-09-06', 'yyyy/mm/dd'));
+INSERT INTO SHIPMENT (order#, warehouse#, shipdate) VALUES (103, 1, to_date('2023-09-05','yyyy/mm/dd'));
+INSERT INTO SHIPMENT (order#, warehouse#, shipdate) VALUES (104, 3, to_date('2023-09-07', 'yyyy/mm/dd'));
+INSERT INTO SHIPMENT (order#, warehouse#, shipdate) VALUES (105, 4, to_date('2023-09-08', 'yyyy/mm/dd'));
+
+-- Example tuples for WAREHOUSE table
+INSERT INTO WAREHOUSE (warehouse#, city) VALUES (1, 'Delhi');
+INSERT INTO WAREHOUSE (warehouse#, city) VALUES (2, 'Mumbai');
+INSERT INTO WAREHOUSE (warehouse#, city) VALUES (3, 'Bangalore');
+INSERT INTO WAREHOUSE (warehouse#, city) VALUES (4, 'Ahmedabad');
+INSERT INTO WAREHOUSE (warehouse#, city) VALUES (5, 'Kolkata');
+
+
+SELECT C.cname AS CUSTNAME, COUNT(O.order#) AS No_of_Orders, AVG(O.ordamt) AS AVG_ORDER_AMT FROM CUSTOMER C LEFT JOIN ORDERS O ON C.cust# = O.cust# GROUP BY C.cname;
+
+
+ SELECT DISTINCT O.order# FROM ORDERS O WHERE NOT EXISTS (SELECT W.warehouse# FROM WAREHOUSE W WHERE W.city = 'Bangalore' AND W.warehouse# NOT IN (SELECT S.warehouse# FROM SHIPMENT S WHERE S.order# = O.order#));
+
+
+UPDATE ORDERS SET ordamt = CASE WHEN EXISTS (SELECT 1 FROM ORDER_ITEMS WHERE order# = ORDERS.order# AND qty > 10) THEN ordamt * 0.90 ELSE ordamt * 0.95 END;
+
