@@ -1,0 +1,149 @@
+create table student(
+regno varchar (20),
+name varchar (50),
+major varchar (20),
+bdate date,
+primary key (regno));
+
+create table course(
+course int,
+cname varchar (35),
+dept varchar (30),
+primary key (course));
+
+create table enroll(
+regno varchar (20),
+course int,
+primary key (regno,course),
+foreign key (course) references course(course) on delete cascade,
+foreign key (regno) references student(regno) on delete cascade);
+
+create table text(
+book_isbn int,
+booktitle varchar(50),
+publisher varchar(50),
+author varchar(50),
+primary key (book_isbn));
+
+create table book_adoption(
+course int,
+sem int,
+book_isbn int,
+primary key (course, book_isbn),
+foreign key (course) references course(course) on delete cascade,
+foreign key (book_isbn) references text(book_isbn) on delete cascade);
+
+insert into student values('210911340','Aatur','IT','15-AUG-2002');
+insert into student values('210911162','Artham','IT','06-JAN-2003');
+insert into student values('210968192','Aakash','DSE','15-AUG-2003');
+insert into student values('210968158','Tejasvee','DSE','07-MAY-2003');
+insert into student values('210907494','Naveen','ECE','23-Jun-2003');
+insert into student values('210906296','Sundar','ECE','18-NOV-2003');
+
+insert into course values(101, 'Introduction to Computer Science', 'Computer Science');
+insert into course values(201, 'Mathematics for Engineers', 'Engineering');
+insert into course values(301, 'History of Art', 'Art History');
+insert into course values(401, 'Principles of Marketing', 'Business');
+insert into course values(501, 'Physics for Beginners', 'Physics');
+insert into course values(601, 'English Literature', 'English');
+insert into course values(701,'CPI','Humanities');
+
+insert into enroll values('210911340',101);
+insert into enroll values('210911162',201);
+insert into enroll values('210968192',301);
+insert into enroll values('210968158',401);
+insert into enroll values('210907494',501);
+insert into enroll values('210906296',601);
+insert into enroll values('210907494',701);
+
+insert into text values (1,'To Kill a Mockingbird', 'HarperCollins', 'Harper Lee');
+insert into text values (2,'1984', 'Penguin Books', 'George Orwell');
+insert into text values (3,'The Catcher in the Rye', 'Little, Brown and Company', 'J.D. Salinger');
+insert into text values (4,'Harry Potter and the Sorcerer''s Stone', 'Scholastic', 'J.K. Rowling');
+insert into text values (5,'The Hobbit', 'Houghton Mifflin', 'J.R.R. Tolkien');
+insert into text values (6,'Fahrenheit 451', 'Del Rey', 'Ray Bradbury');
+insert into text values (7,'Operating System Concepts', 'Wiley', 'Abraham Silberschatz');
+
+insert into book_adoption values (101,1,1);
+insert into book_adoption values (201,1,2);
+insert into book_adoption values (301,2,1);
+insert into book_adoption values (401,3,4);
+insert into book_adoption values (501,4,3);
+insert into book_adoption values (601,4,5);
+insert into book_adoption values (101,4,3);
+insert into book_adoption values (201,2,6);
+
+select cname from course
+where course in ( select course from book_adoption
+group by course
+having count(course) > 1);
+
+
+SELECT DISTINCT C.DEPT
+FROM COURSE C
+WHERE NOT EXISTS (
+	SELECT *
+	FROM BOOK_ADOPTION BA
+	WHERE BA.COURSE = C.COURSE
+	AND BA.BOOK_ISBN NOT IN (
+		SELECT T.BOOK_ISBN
+		FROM TEXT T
+		WHERE T.PUBLISHER = 'Scholastic'
+	)
+);
+
+
+select name, count(distinct dept) as number_of_departments
+from student natural join course natural join enroll
+where regno in (
+select regno from enroll
+group by regno having count (dept) >= 2)
+group by name;
+
+
+select regno,name
+from student
+where regno not in ( select regno 
+		from enroll);
+
+select distinct booktitle
+from text natural join book_adoption natural join course
+where course in (
+select course from
+enroll);
+
+SELECT BA.COURSE
+FROM BOOK_ADOPTION BA
+WHERE BA.BOOK_ISBN IN (
+SELECT T.BOOK_ISBN
+FROM TEXT T
+WHERE T.PUBLISHER = 'Scholastic'
+)
+GROUP BY BA.COURSE
+HAVING COUNT(DISTINCT BA.BOOK_ISBN) >= 2;
+
+
+select name, regno, count(regno) as num_of_books
+from student natural join enroll natural join book_adoption
+group by name, regno
+having count(regno)> all (
+select count(book_isbn)
+from book_adoption
+group by course);
+
+
+select publisher, count(distinct book_isbn) as number_of_books_published
+from text
+group by publisher;
+
+SELECT regno,name
+FROM enroll natural join student
+minus
+( SELECT regno,name
+FROM enroll natural join student
+where course not in (
+SELECT course
+FROM book_adoption)
+);
+
+

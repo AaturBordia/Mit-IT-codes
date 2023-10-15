@@ -1,0 +1,508 @@
+SQL*Plus: Release 19.0.0.0.0 - Production on Sat Sep 9 11:54:20 2023
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Enter user-name: it340@ictorcl
+Enter password:
+Last Successful login time: Sat Sep 09 2023 11:42:33 +05:30
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> create table student(
+  2  regno varchar (20),
+  3  name varchar (50),
+  4  major varchar (20),
+  5  bdate date,
+  6  primary key (regno));
+
+Table created.
+
+SQL>
+SQL> create table course(
+  2  course int,
+  3  cname varchar (35),
+  4  dept varchar (30),
+  5  primary key (course));
+
+Table created.
+
+SQL>
+SQL> create table enroll(
+  2  regno varchar (20),
+  3  course int,
+  4  primary key (regno,course),
+  5  foreign key (course) references course(course) on delete cascade,
+  6  foreign key (regno) references student(regno) on delete cascade);
+
+Table created.
+
+SQL>
+SQL> create table text(
+  2  book_isbn int,
+  3  booktitle varchar(50),
+  4  publisher varchar(50),
+  5  author varchar(50),
+  6  primary key (book_isbn));
+
+Table created.
+
+SQL>
+SQL> create table book_adoption(
+  2  course int,
+  3  sem int,
+  4  book_isbn int,
+  5  primary key (course, book_isbn),
+  6  foreign key (course) references course(course) on delete cascade,
+  7  foreign key (book_isbn) references text(book_isbn) on delete cascade);
+
+Table created.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL VARCHAR2(20)
+ NAME                                               VARCHAR2(50)
+ MAJOR                                              VARCHAR2(20)
+ BDATE                                              DATE
+
+SQL> desc course;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSE                                    NOT NULL NUMBER(38)
+ CNAME                                              VARCHAR2(35)
+ DEPT                                               VARCHAR2(30)
+
+SQL> desc enroll;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL VARCHAR2(20)
+ COURSE                                    NOT NULL NUMBER(38)
+
+SQL> desc text;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BOOK_ISBN                                 NOT NULL NUMBER(38)
+ BOOKTITLE                                          VARCHAR2(50)
+ PUBLISHER                                          VARCHAR2(50)
+ AUTHOR                                             VARCHAR2(50)
+
+SQL> desc book_adoption;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSE                                    NOT NULL NUMBER(38)
+ SEM                                                NUMBER(38)
+ BOOK_ISBN                                 NOT NULL NUMBER(38)
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert into student values('210911340','Aatur','IT','15-AUG-2002');
+
+1 row created.
+
+SQL> insert into student values('210911162','Artham','IT','06-JAN-2003');
+
+1 row created.
+
+SQL> insert into student values('210968192','Aakash','DSE','15-AUG-2003');
+
+1 row created.
+
+SQL> insert into student values('210968158','Tejasvee','DSE','07-MAY-2003');
+
+1 row created.
+
+SQL> insert into student values('210907494','Naveen','ECE','23-Jun-2003');
+
+1 row created.
+
+SQL> insert into student values('210906296','Sundar','ECE','18-NOV-2003');
+
+1 row created.
+
+SQL>
+SQL> insert into course values(101, 'Introduction to Computer Science', 'Computer Science');
+
+1 row created.
+
+SQL> insert into course values(201, 'Mathematics for Engineers', 'Engineering');
+
+1 row created.
+
+SQL> insert into course values(301, 'History of Art', 'Art History');
+
+1 row created.
+
+SQL> insert into course values(401, 'Principles of Marketing', 'Business');
+
+1 row created.
+
+SQL> insert into course values(501, 'Physics for Beginners', 'Physics');
+
+1 row created.
+
+SQL> insert into course values(601, 'English Literature', 'English');
+
+1 row created.
+
+SQL> insert into course values(701,'CPI','Humanities');
+
+1 row created.
+
+SQL>
+SQL> insert into enroll values('210911340',101);
+
+1 row created.
+
+SQL> insert into enroll values('210911162',201);
+
+1 row created.
+
+SQL> insert into enroll values('210968192',301);
+
+1 row created.
+
+SQL> insert into enroll values('210968158',401);
+
+1 row created.
+
+SQL> insert into enroll values('210907494',501);
+
+1 row created.
+
+SQL> insert into enroll values('210906296',601);
+
+1 row created.
+
+SQL> insert into enroll values('210907494',701);
+
+1 row created.
+
+SQL>
+SQL> insert into text values (1,'To Kill a Mockingbird', 'HarperCollins', 'Harper Lee');
+
+1 row created.
+
+SQL> insert into text values (2,'1984', 'Penguin Books', 'George Orwell');
+
+1 row created.
+
+SQL> insert into text values (3,'The Catcher in the Rye', 'Little, Brown and Company', 'J.D. Salinger');
+
+1 row created.
+
+SQL> insert into text values (4,'Harry Potter and the Sorcerer''s Stone', 'Scholastic', 'J.K. Rowling');
+
+1 row created.
+
+SQL> insert into text values (5,'The Hobbit', 'Houghton Mifflin', 'J.R.R. Tolkien');
+
+1 row created.
+
+SQL> insert into text values (6,'Fahrenheit 451', 'Del Rey', 'Ray Bradbury');
+
+1 row created.
+
+SQL> insert into text values (7,'Operating System Concepts', 'Wiley', 'Abraham Silberschatz');
+
+1 row created.
+
+SQL>
+SQL> insert into book_adoption values (101,1,1);
+
+1 row created.
+
+SQL> insert into book_adoption values (201,1,2);
+
+1 row created.
+
+SQL> insert into book_adoption values (301,2,1);
+
+1 row created.
+
+SQL> insert into book_adoption values (401,3,4);
+
+1 row created.
+
+SQL> insert into book_adoption values (501,4,3);
+
+1 row created.
+
+SQL> insert into book_adoption values (601,4,5);
+
+1 row created.
+
+SQL> insert into book_adoption values (101,4,3);
+
+1 row created.
+
+SQL> insert into book_adoption values (201,2,6);
+
+1 row created.
+
+
+SQL> select * from student;
+
+REGNO                NAME
+-------------------- --------------------------------------------------
+MAJOR                BDATE
+-------------------- ---------
+210911340            Aatur
+IT                   15-AUG-02
+
+210911162            Artham
+IT                   06-JAN-03
+
+210968192            Aakash
+DSE                  15-AUG-03
+
+
+REGNO                NAME
+-------------------- --------------------------------------------------
+MAJOR                BDATE
+-------------------- ---------
+210968158            Tejasvee
+DSE                  07-MAY-03
+
+210907494            Naveen
+ECE                  23-JUN-03
+
+210906296            Sundar
+ECE                  18-NOV-03
+
+
+6 rows selected.
+
+SQL> select * from course;
+
+    COURSE CNAME                               DEPT
+---------- ----------------------------------- ------------------------------
+       101 Introduction to Computer Science    Computer Science
+       201 Mathematics for Engineers           Engineering
+       301 History of Art                      Art History
+       401 Principles of Marketing             Business
+       501 Physics for Beginners               Physics
+       601 English Literature                  English
+       701 CPI                                 Humanities
+
+7 rows selected.
+
+SQL> select * from enroll;
+
+REGNO                    COURSE
+-------------------- ----------
+210906296                   601
+210907494                   501
+210907494                   701
+210911162                   201
+210911340                   101
+210968158                   401
+210968192                   301
+
+7 rows selected.
+
+SQL> select * from text;
+
+ BOOK_ISBN BOOKTITLE
+---------- --------------------------------------------------
+PUBLISHER
+--------------------------------------------------
+AUTHOR
+--------------------------------------------------
+         1 To Kill a Mockingbird
+HarperCollins
+Harper Lee
+
+         2 1984
+Penguin Books
+George Orwell
+
+ BOOK_ISBN BOOKTITLE
+---------- --------------------------------------------------
+PUBLISHER
+--------------------------------------------------
+AUTHOR
+--------------------------------------------------
+
+         3 The Catcher in the Rye
+Little, Brown and Company
+J.D. Salinger
+
+         4 Harry Potter and the Sorcerer's Stone
+Scholastic
+
+ BOOK_ISBN BOOKTITLE
+---------- --------------------------------------------------
+PUBLISHER
+--------------------------------------------------
+AUTHOR
+--------------------------------------------------
+J.K. Rowling
+
+         5 The Hobbit
+Houghton Mifflin
+J.R.R. Tolkien
+
+         6 Fahrenheit 451
+
+ BOOK_ISBN BOOKTITLE
+---------- --------------------------------------------------
+PUBLISHER
+--------------------------------------------------
+AUTHOR
+--------------------------------------------------
+Del Rey
+Ray Bradbury
+
+         7 Operating System Concepts
+Wiley
+Abraham Silberschatz
+
+
+7 rows selected.
+
+SQL> select * from book_adoption;
+
+    COURSE        SEM  BOOK_ISBN
+---------- ---------- ----------
+       101          1          1
+       201          1          2
+       301          2          1
+       401          3          4
+       501          4          3
+       601          4          5
+       101          4          3
+       201          2          6
+
+8 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select cname from course
+  2  where course in ( select course from book_adoption
+  3  group by course
+  4  having count(course) > 1);
+
+CNAME
+-----------------------------------
+Introduction to Computer Science
+Mathematics for Engineers
+
+SQL> SELECT DISTINCT C.DEPT
+  2  FROM COURSE C
+  3  WHERE NOT EXISTS (
+  4  SELECT *
+  5  FROM BOOK_ADOPTION BA
+  6  WHERE BA.COURSE = C.COURSE
+  7  AND BA.BOOK_ISBN NOT IN (
+  8  SELECT T.BOOK_ISBN
+  9  FROM TEXT T
+ 10  WHERE T.PUBLISHER = 'Scholastic'
+ 11  )
+ 12  );
+
+DEPT
+------------------------------
+Business
+Humanities
+
+SQL> select name, count(distinct dept) as number_of_departments
+  2  from student natural join course natural join enroll
+  3  where regno in (
+  4  select regno from enroll
+  5  group by regno having count (dept) >= 2)
+  6  group by name;
+
+NAME                                               NUMBER_OF_DEPARTMENTS
+-------------------------------------------------- ---------------------
+Naveen                                                                 2
+
+SQL> select regno,name
+  2  from student
+  3  where regno not in ( select regno
+  4  from enroll);
+
+no rows selected
+
+SQL> select distinct booktitle
+  2  from text natural join book_adoption natural join course
+  3  where course in (
+  4  select course from
+  5  enroll);
+
+BOOKTITLE
+--------------------------------------------------
+The Catcher in the Rye
+Fahrenheit 451
+Harry Potter and the Sorcerer's Stone
+To Kill a Mockingbird
+1984
+The Hobbit
+
+6 rows selected.
+
+SQL> SELECT BA.COURSE
+  2  FROM BOOK_ADOPTION BA
+  3  WHERE BA.BOOK_ISBN IN (
+  4  SELECT T.BOOK_ISBN
+  5  FROM TEXT T
+  6  WHERE T.PUBLISHER = 'Scholastic'
+  7  )
+  8  GROUP BY BA.COURSE
+  9  HAVING COUNT(DISTINCT BA.BOOK_ISBN) >= 2;
+
+no rows selected
+
+SQL> select name, regno, count(regno) as num_of_books
+  2  from student natural join enroll natural join book_adoption
+  3  group by name, regno
+  4  having count(regno)> all (
+  5  select count(book_isbn)
+  6  from book_adoption
+  7  group by course);
+
+no rows selected
+
+SQL> select publisher, count(distinct book_isbn) as number_of_books_published
+  2  from text
+  3  group by publisher;
+
+PUBLISHER                                          NUMBER_OF_BOOKS_PUBLISHED
+-------------------------------------------------- -------------------------
+Penguin Books                                                              1
+Wiley                                                                      1
+Little, Brown and Company                                                  1
+Del Rey                                                                    1
+Scholastic                                                                 1
+Houghton Mifflin                                                           1
+HarperCollins                                                              1
+
+7 rows selected.
+
+SQL> SELECT regno,name
+  2  FROM enroll natural join student
+  3  minus
+  4  ( SELECT regno,name
+  5  FROM enroll natural join student
+  6  where course not in (
+  7  SELECT course
+  8  FROM book_adoption)
+  9  );
+
+REGNO                NAME
+-------------------- --------------------------------------------------
+210906296            Sundar
+210911162            Artham
+210911340            Aatur
+210968158            Tejasvee
+210968192            Aakash
+
+SQL> commit;
+
+Commit complete.
