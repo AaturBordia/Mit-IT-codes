@@ -1,0 +1,17 @@
+D:\210911334\Lab1\Registration_Form\Registration_Form\bin\Debug\Registration_Form.exe.config
+D:\210911334\Lab1\Registration_Form\Registration_Form\bin\Debug\Registration_Form.exe
+D:\210911334\Lab1\Registration_Form\Registration_Form\bin\Debug\Registration_Form.pdb
+D:\210911334\Lab1\Registration_Form\Registration_Form\obj\Debug\Registration_Form.csprojResolveAssemblyReference.cache
+D:\210911334\Lab1\Registration_Form\Registration_Form\obj\Debug\Registration_Form.Form1.resources
+D:\210911334\Lab1\Registration_Form\Registration_Form\obj\Debug\Registration_Form.Properties.Resources.resources
+D:\210911334\Lab1\Registration_Form\Registration_Form\obj\Debug\Registration_Form.csproj.GenerateResource.Cache
+D:\210911334\Lab1\Registration_Form\Registration_Form\obj\Debug\Registration_Form.exe
+D:\210911334\Lab1\Registration_Form\Registration_Form\obj\Debug\Registration_Form.pdb
+D:\210911334\Lab1\Registration_Form\Registration_Form\obj\Debug\Registration_Form.Submission_Form.resources
+D:\210911340- DBS\Lab1\Registration_Form\Registration_Form\bin\Debug\Registration_Form.exe.config
+D:\210911340- DBS\Lab1\Registration_Form\Registration_Form\obj\Debug\Registration_Form.exe
+D:\210911340- DBS\Lab1\Registration_Form\Registration_Form\obj\Debug\Registration_Form.csprojResolveAssemblyReference.cache
+D:\210911340- DBS\Lab1\Registration_Form\Registration_Form\obj\Debug\Registration_Form.Form1.resources
+D:\210911340- DBS\Lab1\Registration_Form\Registration_Form\obj\Debug\Registration_Form.Properties.Resources.resources
+D:\210911340- DBS\Lab1\Registration_Form\Registration_Form\obj\Debug\Registration_Form.Submission_Form.resources
+D:\210911340- DBS\Lab1\Registration_Form\Registration_Form\obj\Debug\Registration_Form.csproj.GenerateResource.Cache
