@@ -1,0 +1,9 @@
+D:\210911340- DBS\Lab7\dbsconnectivity\dbsconnectivity\bin\Debug\dbsconnectivity.exe.config
+D:\210911340- DBS\Lab7\dbsconnectivity\dbsconnectivity\bin\Debug\dbsconnectivity.exe
+D:\210911340- DBS\Lab7\dbsconnectivity\dbsconnectivity\bin\Debug\dbsconnectivity.pdb
+D:\210911340- DBS\Lab7\dbsconnectivity\dbsconnectivity\obj\Debug\dbsconnectivity.csprojResolveAssemblyReference.cache
+D:\210911340- DBS\Lab7\dbsconnectivity\dbsconnectivity\obj\Debug\dbsconnectivity.Form1.resources
+D:\210911340- DBS\Lab7\dbsconnectivity\dbsconnectivity\obj\Debug\dbsconnectivity.Properties.Resources.resources
+D:\210911340- DBS\Lab7\dbsconnectivity\dbsconnectivity\obj\Debug\dbsconnectivity.csproj.GenerateResource.Cache
+D:\210911340- DBS\Lab7\dbsconnectivity\dbsconnectivity\obj\Debug\dbsconnectivity.exe
+D:\210911340- DBS\Lab7\dbsconnectivity\dbsconnectivity\obj\Debug\dbsconnectivity.pdb

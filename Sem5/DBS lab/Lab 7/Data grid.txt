@@ -1,0 +1,71 @@
+Selection of data 
+
+ 
+
+connect(); 
+
+String dept = textBox1.Text; 
+
+comm = new OracleCommand(); 
+
+ comm.Connection = conn; 
+
+ comm.CommandText = "select name from instructor deptname ='" + dept + "'"; 
+
+ /*comm.CommandType = CommandType.Text;*/ 
+
+ OracleDataReader read = comm.ExecuteReader(); / * ExecuteReader used for getting the query results as a DataReader object. Used for select sql stmts */  
+
+ while (read.Read()) 
+
+ { 
+
+          MessageBox.Show(read["name"].ToString()); 
+
+  } 
+
+ 
+
+   read.Close(); 
+
+   conn.Close(); 
+
+ 
+
+To display data in a table: 
+
+ 
+
+Drag and drop DataGridView from toolbox on the form. Right click on dataGridView->add column (number of columns based on your requirement)-> Change the header text (Eg: deptname, name of instructor) as you want it to appear in the form.  
+
+ 
+
+            connect(); 
+
+            comm1 = new OracleCommand(); 
+
+            comm1.Connection = conn; 
+
+            comm1.CommandText = "select * from instructor where deptname="+"'ict'";  
+
+            comm1.CommandType = CommandType.Text; 
+
+                       
+
+            OracleDataAdapter da = new OracleDataAdapter(comm1.CommandText, conn); 
+
+      
+
+  // An OracleDataAdapter object represents a data provider object that populates the    DataSet and updates changes in the DataSet to the Oracle database 
+
+ 
+
+            DataSet ds = new DataSet();  // This is a collection of DataTables. We use the DataSet type to store many DataTables in a single collection 
+
+            da.Fill(ds, "instructor");   // DataAdapter.Fill (ds) here fetches the data from User and fills in the DataSet ds. 
+
+            
+
+            dataGridView1.DataSource = ds.Tables[0]; // will access data at the 0th position. Similarly you can have one  more query, one more data adaptor object, fill data set with some other relation’s data on which the query has to run ( in which case, ds.table[1] will have that queries result which should be assigned to data grid view)  
+
+ 
