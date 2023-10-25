@@ -1,0 +1,139 @@
+2.
+CREATE OR REPLACE TRIGGER on_accident
+AFTER  INSERT OR UPDATE on participated
+For each row
+declare
+p_name person.name%type;
+p_id person.driver_id%type;
+p_addr person.Address%type;
+BEGIN
+if INSERTING then
+SELECT driver_id, name, address
+INTO p_id, p_name, p_addr
+FROM person
+WHERE driver_id = :new.driver_id;
+dbms_output.put_line('name : '||p_name||' driver id : '||p_id||' address : '||p_addr);
+END if;
+END;
+/
+
+set serveroutput on;
+insert into participated values('4', '3B', 11, 5000);
+
+
+
+3.
+CREATE OR REPLACE function acc2(year1 in varchar) return number as
+counter integer;
+BEGIN
+SELECT count(*) INTO counter
+FROM ACCIDENT a
+WHERE extract(year FROM accd_date)=year1;
+dbms_output.put_line('Total Accidents Function');
+return counter;
+END;
+/
+
+set serveroutput on;
+declare year integer;
+BEGIN
+year:=acc2(2008);
+dbms_output.put_line(year);
+END;
+/
+
+set serveroutput on;
+declare year integer;
+BEGIN
+year:=acc2(2023);
+dbms_output.put_line(year);
+END;
+/
+
+4.
+CREATE OR REPLACE PROCEDURE return_damage (n IN varchar2, y IN number)
+IS
+sumT INTEGER;
+BEGIN
+SELECT sum(damage_amount) INTO sumT
+FROM participated natural join accident
+WHERE driver_id = n AND extract(year FROM accd_date) = y;
+dbms_output.put_line('Total Damage Amount: '||sumT||' ');
+END;
+/
+
+set serveroutput on;
+execute return_damage('4','2012');
+
+5.
+
+CREATE OR REPLACE procedure acc1(loc in varchar) IS
+rno INTEGER;
+BEGIN
+For item in(
+SELECT * FROM ACCIDENT WHERE ACCIDENT.location=loc
+) LOOP
+dbms_output.put_line('Report Number : '||item.report_number);
+dbms_output.put_line('Accident Date : '||item.accd_date);
+dbms_output.put_line('Location : '||item.location);
+END LOOP;
+END;
+/
+
+set serveroutput on;
+declare
+BEGIN
+acc1('JONPUR');
+END;
+/
+
+6.
+create or replace procedure ins is
+cursor c is 
+select * from customer where cust in (select cust from orders group by cust having sum(ordamt) > 10000);
+temp c%rowtype;
+begin
+open c;
+loop
+fetch c into temp;
+exit when c%notfound;
+insert into T1 values(temp.cust, temp.cname, temp.city);
+end loop;
+close c;
+end;
+/
+
+set serveroutput on;
+declare
+BEGIN
+ins;
+select * from T1;
+END;
+
+7.
+create or replace procedure acc_info is
+cursor c1 is
+select * from accident;
+temp c1%rowtype;
+begin
+open c1;
+loop
+fetch c1 into temp;
+exit when c1%notfound;
+if temp.location = 'Jonpur' then
+	insert into loc_jonpur values(temp.report_number, temp.accd_date);
+elsif temp.location = 'Udaipur' then
+	insert into loc_udaipur values(temp.report_number, temp.accd_date);
+end if;
+end loop;
+close c1;
+end;
+/
+
+set serveroutput on;
+declare
+BEGIN
+acc_info;
+select * from loc_jonpur;
+select * from loc_udaipur;
+END;

@@ -1,0 +1,224 @@
+
+SQL> CREATE OR REPLACE TRIGGER on_accident
+  2  AFTER  INSERT OR UPDATE on participated
+  3  For each row
+  4  declare
+  5  p_name person.name%type;
+  6  p_id person.driver_id%type;
+  7  p_addr person.Address%type;
+  8  BEGIN
+  9  if INSERTING then
+ 10  SELECT driver_id, name, address
+ 11  INTO p_id, p_name, p_addr
+ 12  FROM person
+ 13  WHERE driver_id = :new.driver_id;
+ 14  dbms_output.put_line('name : '||p_name||' driver id : '||p_id||' address : '||p_addr);
+ 15  END if;
+ 16  END;
+ 17  /
+
+Trigger created.
+
+SQL> set serveroutput on;
+SQL> insert into participated values('4', '3B', 11, 5000);
+insert into participated values('4', '3B', 11, 5000)
+            *
+ERROR at line 1:
+ORA-04098: trigger 'IT340.DRIVER_INFO' is invalid and failed re-validation
+
+
+SQL>
+SQL> CREATE OR REPLACE function acc2(year1 in varchar) return number as
+  2  counter integer;
+  3  BEGIN
+  4  SELECT count(*) INTO counter
+  5  FROM ACCIDENT a
+  6  WHERE extract(year FROM accd_date)=year1;
+  7  dbms_output.put_line('Total Accidents Function');
+  8  return counter;
+  9  END;
+ 10  /
+
+Function created.
+
+SQL> set serveroutput on;
+SQL> declare year integer;
+  2  BEGIN
+  3  year:=acc2(2008);
+  4  dbms_output.put_line(year);
+  5  END;
+  6  /
+Total Accidents Function
+3
+
+PL/SQL procedure successfully completed.
+
+SQL> set serveroutput on;
+SQL> declare year integer;
+  2  BEGIN
+  3  year:=acc2(2023);
+  4  dbms_output.put_line(year);
+  5  END;
+  6  /
+Total Accidents Function
+1
+
+PL/SQL procedure successfully completed.
+
+
+SQL> CREATE OR REPLACE PROCEDURE return_damage (n IN varchar2, y IN number)
+  2  IS
+  3  sumT INTEGER;
+  4  BEGIN
+  5  SELECT sum(damage_amount) INTO sumT
+  6  FROM participated natural join accident
+  7  WHERE driver_id = n AND extract(year FROM accd_date) = y;
+  8  dbms_output.put_line('Total Damage Amount: '||sumT||' ');
+  9  END;
+ 10  /
+
+Procedure created.
+
+SQL> set serveroutput on;
+SQL> execute return_damage('4','2012');
+Total Damage Amount:
+
+PL/SQL procedure successfully completed.
+
+SQL> execute return_damage('3B','2008');
+Total Damage Amount:
+
+PL/SQL procedure successfully completed.
+
+SQL> CREATE OR REPLACE procedure acc1(loc in varchar) IS
+  2  rno INTEGER;
+  3  BEGIN
+  4  For item in(
+  5  SELECT * FROM ACCIDENT WHERE ACCIDENT.location=loc
+  6  ) LOOP
+  7  dbms_output.put_line('Report Number : '||item.report_number);
+  8  dbms_output.put_line('Accident Date : '||item.accd_date);
+  9  dbms_output.put_line('Location : '||item.location);
+ 10  END LOOP;
+ 11  END;
+ 12  /
+
+Procedure created.
+
+SQL> set serveroutput on;
+SQL> declare
+  2  BEGIN
+  3  acc1('JONPUR');
+  4  END;
+  5  /
+Report Number : 1
+Accident Date : 15-SEP-09
+Location : JONPUR
+Report Number : 7
+Accident Date : 12-AUG-08
+Location : JONPUR
+
+PL/SQL procedure successfully completed.
+
+SQL> create or replace procedure ins is
+  2  cursor c is
+  3  select * from customer where cust in (select cust from orders group by cust having sum(ordamt) > 10000);
+  4  temp c%rowtype;
+  5  begin
+  6  open c;
+  7  loop
+  8  fetch c into temp;
+  9  exit when c%notfound;
+ 10  insert into T1 values(temp.cust, temp.cname, temp.city);
+ 11  end loop;
+ 12  close c;
+ 13  end;
+ 14  /
+
+Warning: Procedure created with compilation errors.
+
+SQL>
+SQL> set serveroutput on;
+SQL> declare
+  2  BEGIN
+  3  ins;
+  4  select * from T1;
+  5  END;
+  6  /
+ins;
+*
+ERROR at line 3:
+ORA-06550: line 3, column 1:
+PLS-00905: object IT340.INS is invalid
+ORA-06550: line 3, column 1:
+PL/SQL: Statement ignored
+ORA-06550: line 4, column 15:
+PL/SQL: ORA-00942: table or view does not exist
+ORA-06550: line 4, column 1:
+PL/SQL: SQL Statement ignored
+
+
+SQL> set serveroutput on;
+SQL> declare
+  2  BEGIN
+  3  select * from T1;
+  4  End;
+  5  /
+select * from T1;
+              *
+ERROR at line 3:
+ORA-06550: line 3, column 15:
+PL/SQL: ORA-00942: table or view does not exist
+ORA-06550: line 3, column 1:
+PL/SQL: SQL Statement ignored
+
+
+SQL> create or replace procedure acc_info is
+  2  cursor c1 is
+  3  select * from accident;
+  4  temp c1%rowtype;
+  5  begin
+  6  open c1;
+  7  loop
+  8  fetch c1 into temp;
+  9  exit when c1%notfound;
+ 10  if temp.location = 'Jonpur' then
+ 11  insert into loc_jonpur values(temp.report_number, temp.accd_date);
+ 12  elsif temp.location = 'Udaipur' then
+ 13  insert into loc_udaipur values(temp.report_number, temp.accd_date);
+ 14  end if;
+ 15  end loop;
+ 16  close c1;
+ 17  end;
+ 18  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> select * from loc_jonpur;
+select * from loc_jonpur
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from loc_udaipur;
+select * from loc_udaipur
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> set serveroutput on;
+SQL> declare
+  2  BEGIN
+  3  acc_info;
+  4  END;
+  5  /
+acc_info;
+*
+ERROR at line 3:
+ORA-06550: line 3, column 1:
+PLS-00905: object IT340.ACC_INFO is invalid
+ORA-06550: line 3, column 1:
+PL/SQL: Statement ignored
+s
