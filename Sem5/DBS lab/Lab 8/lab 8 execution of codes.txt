@@ -1,0 +1,145 @@
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Thu Oct 26 12:27:50 2023
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Enter user-name: it340@ictorcl
+Enter password:
+Last Successful login time: Wed Oct 25 2023 09:13:18 +05:30
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> drop table Persons_2;
+
+Table dropped.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> create table Persons_2(
+  2  Personid varchar(10),
+  3  LastName varchar(10),
+  4  FirstName varchar(10),
+  5  Address varchar(10),
+  6  City varchar(10),
+  7  Primary key(Personid));
+
+Table created.
+
+SQL>
+SQL> insert into Persons_2 values('10','Bord','Aatur','Block-8','Udaipur');
+
+1 row created.
+
+SQL> insert into Persons_2 values('11','Vasu','Artham','Ideal','Banglore');
+
+1 row created.
+
+SQL> insert into Persons_2 values('12','Gang','Aakash','Block-15','Vadodra');
+
+1 row created.
+
+SQL> insert into Persons_2 values('13','Raj','Naveen','Ideal','Banglore');
+
+1 row created.
+
+SQL> insert into Persons_2 values('14','Sundar','S','Block-15','Hyderabad');
+
+1 row created.
+
+SQL>
+SQL> desc Persons_2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PERSONID                                  NOT NULL VARCHAR2(10)
+ LASTNAME                                           VARCHAR2(10)
+ FIRSTNAME                                          VARCHAR2(10)
+ ADDRESS                                            VARCHAR2(10)
+ CITY                                               VARCHAR2(10)
+
+SQL> Select * from Persons_2;
+
+PERSONID   LASTNAME   FIRSTNAME  ADDRESS    CITY
+---------- ---------- ---------- ---------- ----------
+10         Bord       Aatur      Block-8    Udaipur
+11         Vasu       Artham     Ideal      Banglore
+12         Gang       Aakash     Block-15   Vadodra
+13         Raj        Naveen     Ideal      Banglore
+14         Sundar     S          Block-15   Hyderabad
+
+SQL>
+SQL>
+SQL> commit;
+
+Commit complete.
+
+SQL>
+SQL> update Persons_2
+  2  set Address='Block-9'
+  3  where Address='Block-8';
+
+1 row updated.
+
+SQL>
+SQL> update Persons_2
+  2  set Address='Block-14'
+  3  where Address='Block-15';
+
+2 rows updated.
+
+SQL>
+SQL> savepoint sp1;
+
+Savepoint created.
+
+SQL>
+SQL> update Persons_2
+  2  set LastName='Bordia'
+  3  where LastName='Bord';
+
+1 row updated.
+
+SQL>
+SQL> update Persons_2
+  2  set LastName='Gangurde'
+  3  where LastName='Gang';
+
+1 row updated.
+
+SQL>
+SQL> rollback to sp1;
+
+Rollback complete.
+
+SQL> Select * from Persons_2;
+
+PERSONID   LASTNAME   FIRSTNAME  ADDRESS    CITY
+---------- ---------- ---------- ---------- ----------
+10         Bord       Aatur      Block-9    Udaipur
+11         Vasu       Artham     Ideal      Banglore
+12         Gang       Aakash     Block-14   Vadodra
+13         Raj        Naveen     Ideal      Banglore
+14         Sundar     S          Block-14   Hyderabad
+
+SQL>
+SQL> rollback;
+
+Rollback complete.
+
+SQL> Select * from Persons_2;
+
+PERSONID   LASTNAME   FIRSTNAME  ADDRESS    CITY
+---------- ---------- ---------- ---------- ----------
+10         Bord       Aatur      Block-8    Udaipur
+11         Vasu       Artham     Ideal      Banglore
+12         Gang       Aakash     Block-15   Vadodra
+13         Raj        Naveen     Ideal      Banglore
+14         Sundar     S          Block-15   Hyderabad
+
+SQL> commit;
+
+Commit complete.

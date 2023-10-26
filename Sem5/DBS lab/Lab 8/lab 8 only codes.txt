@@ -1,0 +1,43 @@
+create table Persons_2(
+Personid varchar(10),
+LastName varchar(10),
+FirstName varchar(10),
+Address varchar(10),
+City varchar(10),
+Primary key(Personid));
+
+insert into Persons_2 values('10','Bord','Aatur','Block-8','Udaipur');
+insert into Persons_2 values('11','Vasu','Artham','Ideal','Banglore');
+insert into Persons_2 values('12','Gang','Aakash','Block-15','Vadodra');
+insert into Persons_2 values('13','Raj','Naveen','Ideal','Banglore');
+insert into Persons_2 values('14','Sundar','S','Block-15','Hyderabad');
+
+desc Persons_2;
+Select * from Persons_2;
+
+
+commit;
+
+update Persons_2 
+set Address='Block-9'
+where Address='Block-8';
+
+update Persons_2 
+set Address='Block-14'
+where Address='Block-15';
+
+savepoint sp1;
+
+update Persons_2 
+set LastName='Bordia'
+where LastName='Bord';
+
+update Persons_2 
+set LastName='Gangurde'
+where LastName='Gang';
+
+rollback to sp1;
+Select * from Persons_2;
+
+rollback;
+Select * from Persons_2;
