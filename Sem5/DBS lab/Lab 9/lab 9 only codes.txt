@@ -1,0 +1,172 @@
+Lab9
+
+
+Use Movie_db
+
+db.createCollection("ACTOR");
+db.createCollection("DIRECTOR");
+db.createCollection("MOVIES");
+db.createCollection("MOVIE_CAST");
+db.createCollection("RATING");
+
+db.ACTOR.insertMany([
+  { Act_id: 1, Act_Name: "Sharukh Khan", Act_Gender: "Male" },
+  { Act_id: 2, Act_Name: "Scarlett Johanson", Act_Gender: "Female" },
+  { Act_id: 3, Act_Name: "Matt Lanter", Act_Gender: "Male" },
+  { Act_id: 4, Act_Name: "Kiara Advani", Act_Gender: "Female" },
+  { Act_id: 5, Act_Name: "Robert Downey Jr.", Act_Gender: "Male" }
+]);
+
+db.DIRECTOR.insertMany([
+  { Dir_id: 1, Dir_Name: "Alfred Joseph Hitchcock", Dir_Phone: "1234567890" },
+  { Dir_id: 2, Dir_Name: "Steven Allan Spielberg", Dir_Phone: "9876543210" }
+]);
+
+db.MOVIES.insertMany([
+  { Mov_id: 1, Mov_Title: "Baadshah", Mov_Year: 1999, Mov_Lang: "Hindi", Dir_id: 1 },
+  { Mov_id: 2, Mov_Title: "Black Widow", Mov_Year: 2021, Mov_Lang: "English", Dir_id: 2 },
+  { Mov_id: 3, Mov_Title: "Star Wars: Episode III - Revenge of the Sith", Mov_Year: 2005, Mov_Lang: "English", Dir_id: 2 },
+  { Mov_id: 4, Mov_Title: "M.S. Dhoni: The Untold Story", Mov_Year: 2016, Mov_Lang: "Hindi", Dir_id: 1 },
+  { Mov_id: 5, Mov_Title: "Avengers: Endgame", Mov_Year: 2019, Mov_Lang: "English", Dir_id: 1 }
+]);
+
+db.MOVIE_CAST.insertMany([
+  { Act_id: 1, Mov_id: 1, Role: "Lead" },
+  { Act_id: 2, Mov_id: 1, Role: "Supporting" },
+  { Act_id: 1, Mov_id: 2, Role: "Lead" },
+  { Act_id: 3, Mov_id: 3, Role: "Lead" },
+  { Act_id: 4, Mov_id: 4, Role: "Supporting" },
+  { Act_id: 5, Mov_id: 5, Role: "Lead" }
+]);
+
+db.RATING.insertMany([
+  { Mov_id: 1, Rev_Stars: 4 },
+  { Mov_id: 2, Rev_Stars: 3 },
+  { Mov_id: 3, Rev_Stars: 5 },
+  { Mov_id: 4, Rev_Stars: 4 },
+  { Mov_id: 5, Rev_Stars: 2 }
+]);
+
+
+
+1.
+db.MOVIES.aggregate([
+    {
+        $lookup: {
+            from: "DIRECTOR",
+            localField: "Dir_id",
+            foreignField: "Dir_id",
+            as: "directorInfo"
+        }
+    },
+    {
+        $match: {
+            "directorInfo.Dir_Name": "Alfred Joseph Hitchcock"
+        }
+    },
+    {
+        $project: {
+            _id: 0,
+            Mov_Title: 1
+        }
+    }
+]);
+
+
+
+2.
+db.MOVIES.aggregate([
+  {
+    $lookup: {
+      from: "MOVIE_CAST",
+      localField: "Mov_id",
+      foreignField: "Mov_id",
+      as: "cast"
+    }
+  },
+  {
+    $unwind: "$cast"
+  },
+  {
+    $group: {
+      _id: "$Mov_id",
+      Mov_Title: { $first: "$Mov_Title" },
+      actorCount: { $sum: 1 }
+    }
+  },
+  {
+    $match: {
+      actorCount: { $gte: 2 }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      Mov_Title: 1
+    }
+  }
+]);
+
+
+
+
+3.
+db.ACTOR.aggregate([
+  {
+    $lookup: {
+      from: "MOVIE_CAST",
+      localField: "Act_id",
+      foreignField: "Act_id",
+      as: "movieRoles"
+    }
+  },
+  {
+    $unwind: "$movieRoles"
+  },
+  {
+    $lookup: {
+      from: "MOVIES",
+      localField: "movieRoles.Mov_id",
+      foreignField: "Mov_id",
+      as: "movies"
+    }
+  },
+  {
+    $unwind: "$movies"
+  },
+  {
+    $group: {
+      _id: "$Act_id",
+      Act_Name: { $first: "$Act_Name" },
+      movieYears: { $push: "$movies.Mov_Year" }
+    }
+  },
+  {
+    $match: {
+      $and: [
+        { "movieYears": { $lt: 2000 } },
+        { "movieYears": { $gt: 2015 } }
+      ]
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      Act_Name: 1
+    }
+  }
+]);
+
+
+4.
+db.MOVIES.updateMany(
+  { Dir_id: 2 }, 
+  { $set: { Rev_Stars: 5 } }
+);
+
+db.MOVIES.save()
+db.MOVIES.find().pretty()
+
+5.
+
+db.RATING.find().sort({ Rev_Stars: 1 });

@@ -1,0 +1,290 @@
+MongoDB shell version v5.0.14
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("669f37ee-4747-44f7-8daa-83aec14bd137") }
+MongoDB server version: 5.0.14
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+---
+The server generated these startup warnings when booting:
+        2023-10-25T11:31:42.711+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> show databases
+MOVIE   0.000GB
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> use Movie_db
+switched to db Movie_db
+> db.createCollection("ACTOR");
+{ "ok" : 1 }
+> db.createCollection("DIRECTOR");
+{ "ok" : 1 }
+> db.createCollection("MOVIES");
+{ "ok" : 1 }
+> db.createCollection("MOVIE_CAST");
+{ "ok" : 1 }
+> db.createCollection("RATING");
+{ "ok" : 1 }
+> db.ACTOR.insertMany([
+...   { Act_id: 1, Act_Name: "Sharukh Khan", Act_Gender: "Male" },
+...   { Act_id: 2, Act_Name: "Scarlett Johanson", Act_Gender: "Female" },
+...   { Act_id: 3, Act_Name: "Matt Lanter", Act_Gender: "Male" },
+...   { Act_id: 4, Act_Name: "Kiara Advani", Act_Gender: "Female" },
+...   { Act_id: 5, Act_Name: "Robert Downey Jr.", Act_Gender: "Male" }
+... ]);
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("653b5316fd78fab62342690a"),
+                ObjectId("653b5316fd78fab62342690b"),
+                ObjectId("653b5316fd78fab62342690c"),
+                ObjectId("653b5316fd78fab62342690d"),
+                ObjectId("653b5316fd78fab62342690e")
+        ]
+}
+>
+> db.DIRECTOR.insertMany([
+...   { Dir_id: 1, Dir_Name: "Alfred Joseph Hitchcock", Dir_Phone: "1234567890" },
+...   { Dir_id: 2, Dir_Name: "Steven Allan Spielberg", Dir_Phone: "9876543210" }
+... ]);
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("653b5316fd78fab62342690f"),
+                ObjectId("653b5316fd78fab623426910")
+        ]
+}
+>
+> db.MOVIES.insertMany([
+...   { Mov_id: 1, Mov_Title: "Baadshah", Mov_Year: 1999, Mov_Lang: "Hindi", Dir_id: 1 },
+...   { Mov_id: 2, Mov_Title: "Black Widow", Mov_Year: 2021, Mov_Lang: "English", Dir_id: 2 },
+...   { Mov_id: 3, Mov_Title: "Star Wars: Episode III - Revenge of the Sith", Mov_Year: 2005, Mov_Lang: "English", Dir_id: 2 },
+...   { Mov_id: 4, Mov_Title: "M.S. Dhoni: The Untold Story", Mov_Year: 2016, Mov_Lang: "Hindi", Dir_id: 1 },
+...   { Mov_id: 5, Mov_Title: "Avengers: Endgame", Mov_Year: 2019, Mov_Lang: "English", Dir_id: 1 }
+... ]);
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("653b5316fd78fab623426911"),
+                ObjectId("653b5316fd78fab623426912"),
+                ObjectId("653b5316fd78fab623426913"),
+                ObjectId("653b5316fd78fab623426914"),
+                ObjectId("653b5316fd78fab623426915")
+        ]
+}
+>
+> db.MOVIE_CAST.insertMany([
+...   { Act_id: 1, Mov_id: 1, Role: "Lead" },
+...   { Act_id: 2, Mov_id: 1, Role: "Supporting" },
+...   { Act_id: 1, Mov_id: 2, Role: "Lead" },
+...   { Act_id: 3, Mov_id: 3, Role: "Lead" },
+...   { Act_id: 4, Mov_id: 4, Role: "Supporting" },
+...   { Act_id: 5, Mov_id: 5, Role: "Lead" }
+... ]);
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("653b5316fd78fab623426916"),
+                ObjectId("653b5316fd78fab623426917"),
+                ObjectId("653b5316fd78fab623426918"),
+                ObjectId("653b5316fd78fab623426919"),
+                ObjectId("653b5316fd78fab62342691a"),
+                ObjectId("653b5316fd78fab62342691b")
+        ]
+}
+>
+> db.RATING.insertMany([
+...   { Mov_id: 1, Rev_Stars: 4 },
+...   { Mov_id: 2, Rev_Stars: 3 },
+...   { Mov_id: 3, Rev_Stars: 5 },
+...   { Mov_id: 4, Rev_Stars: 4 },
+...   { Mov_id: 5, Rev_Stars: 2 }
+... ]);
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("653b5319fd78fab62342691c"),
+                ObjectId("653b5319fd78fab62342691d"),
+                ObjectId("653b5319fd78fab62342691e"),
+                ObjectId("653b5319fd78fab62342691f"),
+                ObjectId("653b5319fd78fab623426920")
+        ]
+}
+> db.MOVIES.aggregate([
+...     {
+...         $lookup: {
+...             from: "DIRECTOR",
+...             localField: "Dir_id",
+...             foreignField: "Dir_id",
+...             as: "directorInfo"
+...         }
+...     },
+...     {
+...         $match: {
+...             "directorInfo.Dir_Name": "Alfred Joseph Hitchcock"
+...         }
+...     },
+...     {
+...         $project: {
+...             _id: 0,
+...             Mov_Title: 1
+...         }
+...     }
+... ]);
+{ "Mov_Title" : "Baadshah" }
+{ "Mov_Title" : "M.S. Dhoni: The Untold Story" }
+{ "Mov_Title" : "Avengers: Endgame" }
+> db.MOVIES.aggregate([
+...   {
+...     $lookup: {
+...       from: "MOVIE_CAST",
+...       localField: "Mov_id",
+...       foreignField: "Mov_id",
+...       as: "cast"
+...     }
+...   },
+...   {
+...     $unwind: "$cast"
+...   },
+...   {
+...     $group: {
+...       _id: "$Mov_id",
+...       Mov_Title: { $first: "$Mov_Title" },
+...       actorCount: { $sum: 1 }
+...     }
+...   },
+...   {
+...     $match: {
+...       actorCount: { $gte: 2 }
+...     }
+...   },
+...   {
+...     $project: {
+...       _id: 0,
+...       Mov_Title: 1
+...     }
+...   }
+... ]);
+{ "Mov_Title" : "Baadshah" }
+> db.ACTOR.aggregate([
+...   {
+...     $lookup: {
+...       from: "MOVIE_CAST",
+...       localField: "Act_id",
+...       foreignField: "Act_id",
+...       as: "movieRoles"
+...     }
+...   },
+...   {
+...     $unwind: "$movieRoles"
+...   },
+...   {
+...     $lookup: {
+...       from: "MOVIES",
+...       localField: "movieRoles.Mov_id",
+...       foreignField: "Mov_id",
+...       as: "movies"
+...     }
+...   },
+...   {
+...     $unwind: "$movies"
+...   },
+...   {
+...     $group: {
+...       _id: "$Act_id",
+...       Act_Name: { $first: "$Act_Name" },
+...       movieYears: { $push: "$movies.Mov_Year" }
+...     }
+...   },
+...   {
+...     $match: {
+...       $and: [
+...         { "movieYears": { $lt: 2000 } },
+...         { "movieYears": { $gt: 2015 } }
+...       ]
+...     }
+...   },
+...   {
+...     $project: {
+...       _id: 0,
+...       Act_Name: 1
+...     }
+...   }
+... ]);
+{ "Act_Name" : "Sharukh Khan" }
+> db.MOVIES.updateMany(
+...   { Dir_id: 2 },
+...   { $set: { Rev_Stars: 5 } }
+... );
+{ "acknowledged" : true, "matchedCount" : 2, "modifiedCount" : 2 }
+> db.MOVIES.save()
+uncaught exception: Error: can't save a null :
+DBCollection.prototype.save@src/mongo/shell/collection.js:590:15
+@(shell):1:1
+> db.MOVIES.find().pretty()
+{
+        "_id" : ObjectId("653b5316fd78fab623426911"),
+        "Mov_id" : 1,
+        "Mov_Title" : "Baadshah",
+        "Mov_Year" : 1999,
+        "Mov_Lang" : "Hindi",
+        "Dir_id" : 1
+}
+{
+        "_id" : ObjectId("653b5316fd78fab623426912"),
+        "Mov_id" : 2,
+        "Mov_Title" : "Black Widow",
+        "Mov_Year" : 2021,
+        "Mov_Lang" : "English",
+        "Dir_id" : 2,
+        "Rev_Stars" : 5
+}
+{
+        "_id" : ObjectId("653b5316fd78fab623426913"),
+        "Mov_id" : 3,
+        "Mov_Title" : "Star Wars: Episode III - Revenge of the Sith",
+        "Mov_Year" : 2005,
+        "Mov_Lang" : "English",
+        "Dir_id" : 2,
+        "Rev_Stars" : 5
+}
+{
+        "_id" : ObjectId("653b5316fd78fab623426914"),
+        "Mov_id" : 4,
+        "Mov_Title" : "M.S. Dhoni: The Untold Story",
+        "Mov_Year" : 2016,
+        "Mov_Lang" : "Hindi",
+        "Dir_id" : 1
+}
+{
+        "_id" : ObjectId("653b5316fd78fab623426915"),
+        "Mov_id" : 5,
+        "Mov_Title" : "Avengers: Endgame",
+        "Mov_Year" : 2019,
+        "Mov_Lang" : "English",
+        "Dir_id" : 1
+}
+> db.RATING.find().sort({ Rev_Stars: 1 });
+{ "_id" : ObjectId("653b5319fd78fab623426920"), "Mov_id" : 5, "Rev_Stars" : 2 }
+{ "_id" : ObjectId("653b5319fd78fab62342691d"), "Mov_id" : 2, "Rev_Stars" : 3 }
+{ "_id" : ObjectId("653b5319fd78fab62342691c"), "Mov_id" : 1, "Rev_Stars" : 4 }
+{ "_id" : ObjectId("653b5319fd78fab62342691f"), "Mov_id" : 4, "Rev_Stars" : 4 }
+{ "_id" : ObjectId("653b5319fd78fab62342691e"), "Mov_id" : 3, "Rev_Stars" : 5 }
+>
+
