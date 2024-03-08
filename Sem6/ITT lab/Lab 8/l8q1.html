@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Inventory Management System</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        h1{
+            text-align: center;
+        }
+        body{
+            background-color: aliceblue;
+        }
+        /* Add your CSS styles here */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Medical Inventory Management System</h1>
+        <br>
+        <form id="add-item-form">
+            <label for="item-id">ID:</label>
+            <input type="text" id="item-id" required>
+
+            <label for="item-name">Name:</label>
+            <input type="text" id="item-name" required>
+
+            <label for="item-quantity">Quantity:</label>
+            <input type="number" id="item-quantity" required>
+
+            <label for="item-price">Price:</label>
+            <input type="text" id="item-price" required>
+
+            <button type="submit">Add Item</button>
+        </form>
+        <br>
+
+        <table id="inventory-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="inventory-list"></tbody>
+        </table>
+    </div>
+
+    <script src="lab8q1.js"></script>
+</body>
+</html>
